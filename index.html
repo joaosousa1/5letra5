@@ -154,6 +154,10 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
+	a {
+		text-decoration: none;
+		color: #a1a1a1;
+	}
 	@media only screen and (min-width: 1000px) {
 		.content {
 			max-width: 400px;
@@ -237,9 +241,7 @@
 			<button id="bt_M" onclick="pressTecla('M')">M</button>
 			<button style="grid-column: 9 / 11; background-color: #414141;" onclick="pressEnter()"><strong>Enter</strong></button>
 		</div>
-		<p style="color: white; text-align: center; font-size: 0.7em;">Esta app é inspirada no wordle, mas com
-			palavras em português sem acento, til, cedilha ou hífen, para diminuir o nível de dificuldade. João
-			Sousa 2022</p>
+		<p style="color: white; text-align: center; font-size: 0.7em;">Esta app é inspirada no wordle, mas com palavras em português sem acento, til, cedilha ou hífen, para diminuir o nível de dificuldade. <a href="https://github.com/joaosousa1">João Sousa 2022</a> </p>
 		<div id="popup" class="center"></div>
 	</div>
 </body>
@@ -348,8 +350,7 @@
 					msg(m2, 0)
 				}
 			} else {
-				const m3 = "\
-				<p style=\"text-align: center;\">A palavra  " + palavra.join("") + " não é válida.</p>"
+				const m3 = "<p style=\"text-align: center;\">A palavra  " + palavra.join("") + " não é válida.</p>"
 				msg(m3, 1300)
 			}
 		}
@@ -403,8 +404,7 @@
 		linha = 0
 		palavra = []
 	}
-	// Inicio
-	restart()
+	restart() // Inicio
 	const m4 = "\
 	<div class=\"btClose\" onClick=\"msgClose()\" >X</div>\
 	<h2 style=\"text-align: center; margin-top: -20px;\">5Letra5 </h2>\
