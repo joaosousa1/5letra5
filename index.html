@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt">
+<!-- © João Sousa 2022 -->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+	<title>5LETRA5</title>
+	<script src="dicionario_5L.js"></script>
+</head>
+<style>
+	body {
+		margin: 0;
+		background-color: #313131;
+		font-family: "roboto";
+		display: grid;
+		place-items: center;
+		height: 100%;
+		margin-top: 20px;
+	}
+	.navbar {
+		display: flex;
+		color: #928a8a;
+		align-items: center;
+	}
+	.navbar .ajuda {
+		margin: 10px 10px 10px 0;
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		padding: 5px;
+		text-align: center;
+		border-radius: 50%;
+		background-color: #1f1f1f;
+		color: #928a8a;
+		cursor: pointer;
+	}
+	.verde {
+		background-color: #08a108 !important;
+	}
+	.amarelo {
+		background-color: #aaaa23 !important;
+	}
+	.cinza {
+		background-color: #1f1f1f !important;
+	}
+	.neutro {
+		background-color: #928a8a;
+	}
+	.content {
+		width: 90%;
+		max-width: 810px;
+	}
+	#grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		gap: 2px;
+		place-items: center;
+	}
+	.caixa {
+		width: 100%;
+		height: 9vh;
+		line-height: 9vh;
+		font-size: 3em;
+		border-radius: 7px;
+		color: #ffffff;
+	}
+	.caixaPequena {
+		width: 10%;
+		height: 3vh;
+		width: 3vh;
+		line-height: 3vh;
+		font-size: 1em;
+		margin: 1px 3px 0 0;
+		border-radius: 7px;
+		color: #ffffff;
+		text-align: center;
+	}
+	button {
+		height: 7vh;
+		cursor: pointer;
+		padding: auto;
+		margin: 1px;
+		border: 0;
+		border-radius: 7px;
+		background-color: #777777;
+		color: #ffffff;
+		font-size: 1em;
+		font-family: roboto;
+		font-weight: bolder;
+	}
+	button:disabled {
+		cursor: not-allowed;
+	}
+	#bt_restart {
+		height: 30px;
+		margin:  0 5px 0 0;
+		float: right;
+		background-color: #08a108;
+		display: none;
+	}
+	.teclado {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		margin-top: 5%;
+		width: 100%;
+		text-align: center;
+	}
+	#popup {
+		top: -200%;
+		padding: 50px;
+		width: 70%;
+		max-width: 400px;
+		background: #363636;
+		color: #ffffff;
+		font-size: 1em;
+		border-radius: 10px;
+		box-shadow: 0px 10px 10px 10px hsla(0, 0%, 0%, 0.437);
+		z-index: 2;
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.5);
+		transition: opacity 300ms ease-in-out,
+		top 1000ms ease-in-out,
+		transform 1000ms ease-in-out;
+		user-select: none;
+	}
+	#popup.active {
+		opacity: 1;
+		top: 10vh;
+		transform: translate(-50%, 0%) scale(1);
+		transition: transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+	}
+	#popup .btClose {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 10px;
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		padding: 5px;
+		text-align: center;
+		border-radius: 50%;
+		background-color: #d13f3f;
+		color: #1d1d1d;
+		cursor: pointer;
+	}
+	.center {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	@media only screen and (min-width: 1000px) {
+		.content {
+			max-width: 400px;
+		}
+	}
+</style>
+<body>
+	<div class="content">
+		<div class="navbar">
+			<button id="bt_restart" onclick="restart()">Novo Jogo</button>
+			<p class="ajuda" onclick="msg(m4, 0)">?</p>
+			<p><strong>5LETRA5</strong></p>
+		</div>
+		<div id="grid">
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+			<div class="caixa neutro"></div>
+		</div>
+		<div class="teclado" id="teclado">
+			<button id="bt_Q" onclick="pressTecla('Q')">Q</button>
+			<button id="bt_W" onclick="pressTecla('W')">W</button>
+			<button id="bt_E" onclick="pressTecla('E')">E</button>
+			<button id="bt_R" onclick="pressTecla('R')">R</button>
+			<button id="bt_T" onclick="pressTecla('T')">T</button>
+			<button id="bt_Y" onclick="pressTecla('Y')">Y</button>
+			<button id="bt_U" onclick="pressTecla('U')">U</button>
+			<button id="bt_I" onclick="pressTecla('I')">I</button>
+			<button id="bt_O" onclick="pressTecla('O')">O</button>
+			<button id="bt_P" onclick="pressTecla('P')">P</button>
+
+			<button id="bt_A" onclick="pressTecla('A')">A</button>
+			<button id="bt_S" onclick="pressTecla('S')">S</button>
+			<button id="bt_D" onclick="pressTecla('D')">D</button>
+			<button id="bt_F" onclick="pressTecla('F')">F</button>
+			<button id="bt_G" onclick="pressTecla('G')">G</button>
+			<button id="bt_H" onclick="pressTecla('H')">H</button>
+			<button id="bt_I" onclick="pressTecla('I')">I</button>
+			<button id="bt_J" onclick="pressTecla('J')">J</button>
+			<button id="bt_k" onclick="pressTecla('K')">K</button>
+			<button id="bt_L" onclick="pressTecla('L')">L</button>
+
+			<button style="background-color: #414141;" onclick="pressBack()"><svg height="30px" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" /></svg></button>
+			<button id="bt_Z" onclick="pressTecla('Z')">Z</button>
+			<button id="bt_X" onclick="pressTecla('X')">X</button>
+			<button id="bt_C" onclick="pressTecla('C')">C</button>
+			<button id="bt_V" onclick="pressTecla('V')">V</button>
+			<button id="bt_B" onclick="pressTecla('B')">B</button>
+			<button id="bt_N" onclick="pressTecla('N')">N</button>
+			<button id="bt_M" onclick="pressTecla('M')">M</button>
+			<button style="grid-column: 9 / 11; background-color: #414141;" onclick="pressEnter()"><strong>Enter</strong></button>
+		</div>
+		<p style="color: white; text-align: center; font-size: 0.7em;">Esta app é inspirada no wordle, mas com
+			palavras em português sem acento, til, cedilha ou hífen, para diminuir o nível de dificuldade. João
+			Sousa 2022</p>
+		<div id="popup" class="center"></div>
+	</div>
+</body>
+<script>
+	let certa = ""
+	let palavra = []
+	function verificaLetras(pal) { // verifica as letras na palavra
+		let t = pal.split("")
+		let c = certa.split("")
+		for (let i = 0; i < 5; i++) {
+			let bt = document.getElementById("bt_" + palavra[i]) // alterar css no teclado
+			if (t[i] === c[i]) {
+				palavra[i] = t[i] + "*" //verde
+				bt.classList.add("verde")
+			} else {
+				if (contem(t[i], certa)) {
+					palavra[i] = t[i] + "+" //amarelo
+				} else {
+					palavra[i] = t[i] + "-" //cinza
+					bt.classList.add("cinza")
+					bt.disabled = true
+				}
+			}
+		}
+	}
+	function contem(l, p) { // verifica se palavra contem a letra
+		let palavra = p.split("")
+		for (let i = 0; i < palavra.length; i++) {
+			if (l === palavra[i]) {
+				return true
+			}
+		}
+	}
+	let grid = document.getElementById("grid") 
+	function formataSaida(seq, linha) { // adiciona cores na grid
+		let r = seq.split(",")
+		for (let i = 0; i < r.length; i++) {
+			let caixa = r[i]
+			let letra = caixa.split("")[0]
+			let cor = caixa.split("")[1]
+			let ele = document.getElementsByClassName("neutro")[i + (linha * 5)]
+			ele.innerText = letra.toUpperCase()
+			switch (cor) {
+				case "*":
+					ele.classList.add("verde")
+					break;
+				case "+":
+					ele.classList.add("amarelo")
+					break;
+				case "-":
+					ele.classList.add("cinza")
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	function pressTecla(v) {
+		if (palavra.length < 5) {
+			palavra.push(v)
+			let ele = document.getElementsByClassName("neutro")[(palavra.length - 1) + (linha * 5)]
+			ele.innerText = v
+		} else {
+			msg("Pressione \"Enter\" para submeter a palavra.<br>Ou use a tecla \"<svg height=\"12px\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z\" /></svg>\" para apagar.", 2000)
+		}
+	}
+	function pressEnter() {
+		if (palavra.join("").toLowerCase() === certa) {
+			verificaLetras(palavra.join("").toLowerCase())
+			formataSaida(palavra.toString(), linha)
+			keyboardOff()
+			const m1 = "\
+			<div class=\"btClose\" onClick=\"msgClose()\" >X</div>\
+			<h2 style=\"text-align: center;\">🎉</h2>\
+			<h2 style=\"text-align: center;\">Parabéns! Você acertou!</h2>\
+			<br>\
+			<div style=\"display: flex; justify-content: center;\">\
+			<div class=\"caixaPequena verde\">" + certa[0].toUpperCase() + "</div>\
+			<div class=\"caixaPequena verde\">" + certa[1].toUpperCase() + "</div>\
+			<div class=\"caixaPequena verde\">" + certa[2].toUpperCase() + "</div>\
+			<div class=\"caixaPequena verde\">" + certa[3].toUpperCase() + "</div>\
+			<div class=\"caixaPequena verde\">" + certa[4].toUpperCase() + "</div>\
+			</div>"
+			msg(m1, 0)
+		} else {
+			if ( dicionario.includes(palavra.join("").toLowerCase())) { // verifica se a palavra existe
+				if (palavra.length === 5) {
+					verificaLetras(palavra.join("").toLowerCase())
+					formataSaida(palavra.toString(), linha)
+					linha++
+					palavra = []
+				}
+				if (linha === 6) {
+					keyboardOff()
+					const m2 = "\
+					<div class=\"btClose\" onClick=\"msgClose()\" >X</div>\
+					<h2 style=\"text-align: center; margin-top: -20px;\">Game Over</h2>\
+					<p style=\"text-align: center;\">Solução:</p>\
+					<div style=\"display: flex; justify-content: center;\">\
+					<div class=\"caixaPequena verde\">" + certa[0].toUpperCase() + "</div>\
+					<div class=\"caixaPequena verde\">" + certa[1].toUpperCase() + "</div>\
+					<div class=\"caixaPequena verde\">" + certa[2].toUpperCase() + "</div>\
+					<div class=\"caixaPequena verde\">" + certa[3].toUpperCase() + "</div>\
+					<div class=\"caixaPequena verde\">" + certa[4].toUpperCase() + "</div>\
+					</div>"
+					msg(m2, 0)
+				}
+			} else {
+				const m3 = "\
+				<p style=\"text-align: center;\">A palavra  " + palavra.join("") + " não é válida.</p>"
+				msg(m3, 1300)
+			}
+		}
+	}
+	function pressBack() {
+		palavra.pop();
+		let ele = document.getElementsByClassName("neutro")[palavra.length + (linha * 5)]
+		ele.innerText = ""
+	}
+	function msg(msgTxt, time0, callB = undefined) {
+		let msg = document.getElementById("popup")
+		msg.innerHTML = msgTxt
+		msg.classList.add("active")
+		try { document.getElementById("dica").setAttribute("title", certa) } catch {} //shiii a dica está na dica :P
+		if (time0 !== 0) {
+			setTimeout(() => {
+				msg.classList.remove("active")
+				callB === undefined ? console.log("ok") : callB()
+			}, time0);
+		}// se não tem tempo, tem de fechar manualmente
+	}
+	function msgClose() {
+		let msg = document.getElementById("popup")
+		msg.classList.remove("active")
+	}
+	function keyboardOff() {
+		document.getElementById("bt_restart").style.display = "unset";
+		document.getElementById("teclado").style.display = "none";
+	}
+	function restart() {
+		document.getElementById("bt_restart").style.display = "none";
+		document.getElementById("teclado").style.display = "grid";
+		for (let i = 0; i < 30; i++) { // reset letras
+			let e = document.getElementsByClassName("neutro")[i]
+			e.classList.remove("verde")
+			e.classList.remove("amarelo")
+			e.classList.remove("cinza")
+			e.innerText = ""
+		}
+		document.querySelectorAll(".teclado .verde").forEach((e) => { // reset botões 
+			e.classList.remove("verde")
+		})
+		document.querySelectorAll(".teclado .amarelo").forEach((e) => {
+			e.classList.remove("amarelo")
+		})
+		document.querySelectorAll(".teclado .cinza").forEach((e) => {
+			e.classList.remove("cinza")
+			e.disabled = false
+		})
+		certa = dicionario[Math.floor(Math.random() * dicionario.length)].toLowerCase(); // próxima palavra
+		linha = 0
+		palavra = []
+	}
+	// Inicio
+	restart()
+	const m4 = "\
+	<div class=\"btClose\" onClick=\"msgClose()\" >X</div>\
+	<h2 style=\"text-align: center; margin-top: -20px;\">5Letra5 </h2>\
+	Tente adivinhar a palavra de 5 letras em 6 tentativas. <br>\
+	A cada tentativa pressione \"Enter\" <br>\
+	Exemplo para a palavra \"LETRA\" <br>\
+	<br>\
+	<div style=\"display: flex;\">\
+	<div class=\"caixaPequena neutro\">L</div>\
+	<div class=\"caixaPequena neutro\">E</div>\
+	<div class=\"caixaPequena neutro\">T</div>\
+	<div class=\"caixaPequena neutro\">R</div>\
+	<div class=\"caixaPequena neutro\">A</div>\
+	</div>\
+	<br>\
+	<div style=\"display: flex\">\
+	<div class=\"caixaPequena verde\">L</div>\
+	<div class=\"caixaPequena cinza\">U</div>\
+	<div class=\"caixaPequena cinza\">V</div>\
+	<div class=\"caixaPequena amarelo\">A</div>\
+	<div class=\"caixaPequena cinza\">S</div>\
+	</div>\
+	<br>\
+	Significado das cores: <br>\
+	<br>\
+	<div style=\"display: flex; align-items:center\">\
+	<div class=\"caixaPequena verde\">L</div><div>Letra no local correto.</div>\
+	</div>\
+	<br>\
+	<div style=\"display: flex; align-items:center\">\
+	<div class=\"caixaPequena amarelo\">A</div><div>A letra não está no local correto.</div>\
+	</div>\
+	<br>\
+	<div style=\"display: flex; align-items:center\">\
+	<div class=\"caixaPequena cinza\">S</div><div>A palavra não tem essa letra.</div>\
+	</div>\
+	<br>\
+	<span id=\"dica\">Dica</span>: As palavras do jogo não contém acento, til, cedilha ou hífen."
+	setTimeout(() => {
+		msg(m4, 0)
+	}, 1000);
+</script>
+</html>
